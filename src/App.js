@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import Navbar from './components/Navbar/Navbar';
+import data from './data.json'
+import Moviecard from './components/Navbar/Moviecard';
+
+import { useState } from 'react';
+import Footer from './components/Navbar/Footer';
 
 function App() {
+  const [searchvalue,setsearchvalue]=useState("");
+
+  const inputhandler=(event)=>{
+    setsearchvalue(()=>event.target.value);
+
+  }
+
+  const returncards=()=>{
+    return data.filter(
+      (card)=>card.title.toLowerCase().includes(searchvalue.toLowerCase()) || searchvalue===""
+    );
+
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Navbar inputhandler={inputhandler}/>
+      <Moviecard data={data} returncards={returncards}/>
+      <Footer/>
+    </>
   );
 }
 
